@@ -67,7 +67,7 @@ def auth():
 @app.route('/webhook')
 def webhook():
     monzo = get_monzo()
-    for importer, modname, ispkg im pkgutil.walk_packages(path="modules", prefix=__name__+"."):
+    for importer, modname, ispkg in pkgutil.walk_packages(path="modules", prefix=__name__+"."):
         module = __import__(modname)
         if hasattr(module, 'webhook'):
             module.webhook(monzo, request.form)
