@@ -68,12 +68,20 @@ def auth():
 
 @app.route('/webhook')
 def webhook():
-    return "OK"
+    monzo = get_monzo()
+    return json.dumps(monzo.whoami())
 
 def save_token_data(monzo):
     token = monzo._token.copy()
     token.update(client_secret=monzo._client_secret)
     Config.insert_or_update(TOKEN_JSON_KEY, json.dumps(token))
+
+def get_monzo():
+    return MonzoAPI(
+        token_data=Config.query.get(TOKEN_JSON_KEY).value,
+        token_save_function=save_token_data,
+        redirect_url=Config.query.get(REDIRECT_URL_KEY).value
+    )
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
