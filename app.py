@@ -6,7 +6,8 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-    return "Hello, World!"
+    import json
+    return json.dumps(os.environ)
 
 @app.route('/webhook')
 def webhook():

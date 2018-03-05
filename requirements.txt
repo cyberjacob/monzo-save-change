@@ -1,2 +1,4 @@
+-e git+https://github.com/cyberjacob/pymonzo.git
 flask
 gunicorn
+requests
