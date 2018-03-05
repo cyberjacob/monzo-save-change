@@ -62,14 +62,16 @@ def auth():
         auth_code=request.args['code'],
         token_save_function=save_token_data
     )
-    token = monzo._token.copy()
-    token.update(client_secret=monzo._client_secret)
-    return json.dumps(token)
+    return "Success!"
 
 @app.route('/webhook')
 def webhook():
     monzo = get_monzo()
-    return json.dumps(monzo.whoami())
+    for importer, modname, ispkg im pkgutil.walk_packages(path="modules", prefix=__name__+"."):
+        module = __import__(modname)
+        if hasattr(module, 'webhook'):
+            module.webhook(monzo, request.form)
+    return "OK"
 
 def save_token_data(monzo):
     token = monzo._token.copy()
