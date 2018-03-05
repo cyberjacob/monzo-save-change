@@ -4,5 +4,8 @@
   "keywords": [
     "Monzo"
   ],
-  "repository": "https://github.com/cyberjacob/monzo-save-change"
+  "repository": "https://github.com/cyberjacob/monzo-save-change",
+  "addons": [
+    "heroku-postgresql"
+  ]
 }

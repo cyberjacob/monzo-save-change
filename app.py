@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 db = SQLAlchemy(app)
 
 class Config(db.Model):
-    key = db.Column(db.String(10))
+    key = db.Column(db.String(10), primary_key=True)
     value = db.Column(db.String(128))
 
 
