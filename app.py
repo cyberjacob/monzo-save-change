@@ -19,9 +19,15 @@ class Config(db.Model):
     key = db.Column(db.String(32), primary_key=True)
     value = db.Column(db.String(128))
 
-    def __init__(self, Key, Value):
-        self.key = Key
-        self.value = Value
+    @staticmethod
+    def insert_or_update(key, value):
+        obj = Config.query.get(key)
+        if obj:
+            obj.value = value
+            db.session.commit()
+        else:
+            db.session.add(Config(key=key, value=value))
+            db.session.commit()
 
 try:
     for x in db.session.query(Config):
@@ -36,9 +42,8 @@ def index():
 
 @app.route('/', methods=['POST'])
 def submit_config():
-    db.session.add(Config(CLIENT_ID_KEY, request.form['Client ID']))
-    db.session.add(Config(CLIENT_SECRET_KEY, request.form['Client Secret']))
-    db.session.commit()
+    Config.insert_or_update(CLIENT_ID_KEY, value=request.form['Client ID']))
+    Config.insert_or_update(CLIENT_SECRET_KEY, value=request.form['Client Secret']))
     return redirect("https://auth.getmondo.co.uk/?response_type=code&redirect_uri="+request.form['Redirect URL']+"/auth&client_id="+request.form['Client ID'])
 
 @app.route('/webhook')
