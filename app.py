@@ -37,7 +37,7 @@ def index():
 @app.route('/', methods=['POST'])
 def submit_config():
     db.session.add(Config(CLIENT_ID_KEY, request.form['Client ID']))
-    db.session.add(Config(CLIENT_ID_SECRET, request.form['Client Secret']))
+    db.session.add(Config(CLIENT_SECRET_KEY, request.form['Client Secret']))
     db.session.commit()
     return redirect("https://auth.getmondo.co.uk/?response_type=code&redirect_uri="+request.form['Redirect URL']+"/auth&client_id="+request.form['Client ID'])
 
