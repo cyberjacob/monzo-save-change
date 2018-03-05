@@ -64,7 +64,7 @@ def auth():
     )
     return "Success!"
 
-@app.route('/webhook')
+@app.route('/webhook', methods=['POST'])
 def webhook():
     monzo = get_monzo()
     for importer, modname, ispkg in pkgutil.walk_packages(path="modules", prefix=__name__+"."):
