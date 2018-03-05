@@ -78,7 +78,7 @@ def save_token_data(monzo):
 
 def get_monzo():
     return MonzoAPI(
-        token_data=Config.query.get(TOKEN_JSON_KEY).value,
+        token_data=json.loads(Config.query.get(TOKEN_JSON_KEY).value),
         token_save_function=save_token_data,
         redirect_url=Config.query.get(REDIRECT_URL_KEY).value
     )
