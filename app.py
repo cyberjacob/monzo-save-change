@@ -53,7 +53,7 @@ def submit_keys():
 
 @app.route('/auth', methods=['GET'])
 def auth():
-    monzo = MonzoAPI(client_id=Config.query.get(CLIENT_ID_KEY).value, client_secret=Config.query.get(CLIENT_SECRET_KEY).value, auth_code=request.form['code'])
+    monzo = MonzoAPI(client_id=Config.query.get(CLIENT_ID_KEY).value, client_secret=Config.query.get(CLIENT_SECRET_KEY).value, auth_code=request.args['code'])
     token = self._token.copy()
     token.update(client_secret=monzo._client_secret)
     Config.insert_or_update(TOKEN_JSON_KEY, value=json.dumps(token))
