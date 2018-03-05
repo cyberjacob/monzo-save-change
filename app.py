@@ -20,7 +20,8 @@ class Config(db.Model):
     value = db.Column(db.String(128))
 
 try:
-    db.session.query(Config)
+    for x in db.session.query(Config):
+        pass
 except exc.ProgrammingError:
     db.create_all()
 
