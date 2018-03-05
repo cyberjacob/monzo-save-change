@@ -1,4 +1,5 @@
 import os
+import urllib.parse
 
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
@@ -44,7 +45,8 @@ def index():
 def submit_keys():
     Config.insert_or_update(CLIENT_ID_KEY, value=request.form['Client ID'])
     Config.insert_or_update(CLIENT_SECRET_KEY, value=request.form['Client Secret'])
-    return redirect("https://auth.getmondo.co.uk/?response_type=code&redirect_uri="+request.form['Heroku App URL']+"/auth&client_id="+request.form['Client ID'])
+    redirect_url = urllib.parse.urljoin(request.form['Heroku App URL'], "auth")
+    return redirect("https://auth.getmondo.co.uk/?response_type=code&redirect_uri="+redirect_url+"&client_id="+request.form['Client ID'])
 
 @app.route('/webhook')
 def webhook():
