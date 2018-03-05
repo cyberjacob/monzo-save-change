@@ -19,6 +19,12 @@ class Config(db.Model):
     value = db.Column(db.String(128))
 
 
+if not db.dialect.has_table(db, "config"):
+    db.create_all()
+    db.session.commit()
+
+
+
 @app.route('/', methods=['GET'])
 def index():
     x = ""
