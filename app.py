@@ -1,10 +1,10 @@
 import os
 
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='static')
 
 DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:////tmp/flask_app.db')
 
@@ -28,10 +28,11 @@ except exc.ProgrammingError:
 
 @app.route('/', methods=['GET'])
 def index():
-    x = ""
-    for instance in db.session.query(Config):
-        x += instance.key+" - "+instance.value+"<br/>"
-    return x
+    return send_from_directory("config.html")
+
+@app.route('/', methods=['POST'])
+def submit_config():
+    return request.form
 
 @app.route('/webhook')
 def webhook():
