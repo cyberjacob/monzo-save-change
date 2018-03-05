@@ -4,7 +4,7 @@ from flask import Flask, request, redirect, url_for, render_template, send_from_
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
 
-app = Flask(__name__, static_url_path='static')
+app = Flask(__name__)
 
 DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:////tmp/flask_app.db')
 
@@ -28,7 +28,7 @@ except exc.ProgrammingError:
 
 @app.route('/', methods=['GET'])
 def index():
-    return send_from_directory("config.html")
+    return send_from_directory("static/config.html")
 
 @app.route('/', methods=['POST'])
 def submit_config():
