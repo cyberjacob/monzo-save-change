@@ -19,6 +19,10 @@ class Config(db.Model):
     key = db.Column(db.String(10), primary_key=True)
     value = db.Column(db.String(128))
 
+    def __init__(self, Key, Value):
+        self.key = Key
+        self.value = Value
+
 try:
     for x in db.session.query(Config):
         pass
@@ -32,8 +36,10 @@ def index():
 
 @app.route('/', methods=['POST'])
 def submit_config():
-    import json
-    return json.dumps(dict(request.form))
+    db.session.add(Config(CLIENT_ID_KEY, request.form['Client ID']))
+    db.session.add(Config(CLIENT_ID_SECRET, request.form['Client Secret']))
+    db.session.commit()
+    return redirect("https://auth.getmondo.co.uk/?response_type=code&redirect_uri="+request.form['Redirect URL']+"/auth&client_id="+request.form['Client ID'])
 
 @app.route('/webhook')
 def webhook():
