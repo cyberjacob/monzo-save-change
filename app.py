@@ -71,8 +71,8 @@ def webhook():
     monzo = get_monzo()
 
     for package in pkgutil.walk_packages('.'):
-        if not x[2] and 'modules' in x[1]:
-            modules = importlib.import_module(x[1])
+        if not package[2] and 'modules' in package[1]:
+            modules = importlib.import_module(package[1])
             if hasattr(module, 'webhook'):
                 module.webhook(monzo, request.form)
     return "OK"
