@@ -32,7 +32,8 @@ def index():
 
 @app.route('/', methods=['POST'])
 def submit_config():
-    return request.form
+    import json
+    return json.dumps(dict(request.form))
 
 @app.route('/webhook')
 def webhook():
