@@ -22,7 +22,7 @@ db = SQLAlchemy(app)
 
 class Config(db.Model):
     key = db.Column(db.String(32), primary_key=True)
-    value = db.Column(db.String(128))
+    value = db.Column(db.String(1048))
 
     @staticmethod
     def insert_or_update(key, value):
