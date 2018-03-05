@@ -1,6 +1,7 @@
 import os
 import json
 import urllib.parse
+import pkgutil
 from pymonzo import MonzoAPI
 
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory
