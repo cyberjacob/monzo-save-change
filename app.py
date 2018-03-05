@@ -74,7 +74,7 @@ def webhook():
         if not package[2] and 'modules' in package[1]:
             module = importlib.import_module(package[1])
             if hasattr(module, 'webhook'):
-                module.webhook(monzo, request.form)
+                module.webhook(monzo, request.json)
     return "OK"
 
 def save_token_data(monzo):
