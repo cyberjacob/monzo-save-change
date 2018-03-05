@@ -62,7 +62,7 @@ def auth():
         auth_code=request.args['code'],
         token_save_function=save_token_data
     )
-    token = self._token.copy()
+    token = monzo._token.copy()
     token.update(client_secret=monzo._client_secret)
     return json.dumps(token)
 
