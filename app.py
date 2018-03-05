@@ -20,7 +20,7 @@ class Config(db.Model):
 
 try:
     db.session.query(Config)
-except sqlalchemy.exc.ProgrammingError:
+except (sqlalchemy.exc.ProgrammingError, psycopg2.ProgrammingError):
     db.create_all()
 
 
