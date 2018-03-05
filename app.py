@@ -2,6 +2,7 @@ import os
 import json
 import urllib.parse
 import pkgutil
+import importlib
 from pymonzo import MonzoAPI
 
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory
@@ -68,10 +69,12 @@ def auth():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     monzo = get_monzo()
-    for importer, modname, ispkg in pkgutil.walk_packages(path="modules", prefix=__name__+"."):
-        module = __import__(modname)
-        if hasattr(module, 'webhook'):
-            module.webhook(monzo, request.form)
+
+    for package in pkgutil.walk_packages('.'):
+        if not x[2] and 'modules' in x[1]:
+            modules = importlib.import_module(x[1])
+            if hasattr(module, 'webhook'):
+                module.webhook(monzo, request.form)
     return "OK"
 
 def save_token_data(monzo):
