@@ -14,6 +14,7 @@ DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:////tmp/flask_app.db')
 CLIENT_ID_KEY = "clientId"
 CLIENT_SECRET_KEY = "clientSecret"
 CLIENT_TOKEN_KEY = "clientToken"
+REDIRECT_URL_KEY = "RedirectUrl"
 TOKEN_JSON_KEY = "tokenJSON"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
@@ -49,19 +50,30 @@ def submit_keys():
     Config.insert_or_update(CLIENT_ID_KEY, value=request.form['Client ID'])
     Config.insert_or_update(CLIENT_SECRET_KEY, value=request.form['Client Secret'])
     redirect_url = urllib.parse.urljoin(request.form['Heroku App URL'], "auth")
+    Config.insert_or_update(REDIRECT_URL_KEY, value=redirect_url)
     return redirect("https://auth.getmondo.co.uk/?response_type=code&redirect_uri="+redirect_url+"&client_id="+request.form['Client ID'])
 
 @app.route('/auth', methods=['GET'])
 def auth():
-    monzo = MonzoAPI(client_id=Config.query.get(CLIENT_ID_KEY).value, client_secret=Config.query.get(CLIENT_SECRET_KEY).value, auth_code=request.args['code'])
+    monzo = MonzoAPI(
+        client_id=Config.query.get(CLIENT_ID_KEY).value,
+        client_secret=Config.query.get(CLIENT_SECRET_KEY).value,
+        redirect_url=Config.query.get(REDIRECT_URL_KEY).value,
+        auth_code=request.args['code'],
+        token_save_function=save_token_data
+    )
     token = self._token.copy()
     token.update(client_secret=monzo._client_secret)
-    Config.insert_or_update(TOKEN_JSON_KEY, value=json.dumps(token))
     return json.dumps(token)
 
 @app.route('/webhook')
 def webhook():
     return "OK"
+
+def save_token_data(monzo):
+    token = monzo._token.copy()
+    token.update(client_secret=monzo._client_secret)
+    Config.insert_or_update(TOKEN_JSON_KEY, json.dumps(token))
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
