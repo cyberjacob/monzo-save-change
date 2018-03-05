@@ -1,0 +1,8 @@
+{
+  "name": "Monzo Save the Change",
+  "description": "A \"Save the Change\" app for Monzo",
+  "keywords": [
+    "Monzo"
+  ],
+  "repository": "https://github.com/cyberjacob/monzo-save-change"
+}
