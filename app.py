@@ -42,8 +42,8 @@ def index():
 
 @app.route('/', methods=['POST'])
 def submit_config():
-    Config.insert_or_update(CLIENT_ID_KEY, value=request.form['Client ID']))
-    Config.insert_or_update(CLIENT_SECRET_KEY, value=request.form['Client Secret']))
+    Config.insert_or_update(CLIENT_ID_KEY, value=request.form['Client ID'])
+    Config.insert_or_update(CLIENT_SECRET_KEY, value=request.form['Client Secret'])
     return redirect("https://auth.getmondo.co.uk/?response_type=code&redirect_uri="+request.form['Redirect URL']+"/auth&client_id="+request.form['Client ID'])
 
 @app.route('/webhook')
