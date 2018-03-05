@@ -28,7 +28,7 @@ except exc.ProgrammingError:
 
 @app.route('/', methods=['GET'])
 def index():
-    return send_from_directory("static/config.html")
+    return send_from_directory("static", "config.html")
 
 @app.route('/', methods=['POST'])
 def submit_config():
