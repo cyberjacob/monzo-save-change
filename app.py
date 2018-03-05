@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, request, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import exc
 
 app = Flask(__name__)
 
@@ -20,7 +21,7 @@ class Config(db.Model):
 
 try:
     db.session.query(Config)
-except (sqlalchemy.exc.ProgrammingError, psycopg2.ProgrammingError):
+except exc.ProgrammingError:
     db.create_all()
 
 
