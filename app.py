@@ -1,13 +1,30 @@
 import os
 
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, render_template
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:////tmp/flask_app.db')
+
+CLIENT_ID_KEY = "clientId"
+CLIENT_SECRET_KEY = "clientSecret"
+CLIENT_TOKEN_KEY = "clientToken"
+
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+db = SQLAlchemy(app)
+
+class Config(db.Model):
+    key = db.Column(db.String(10))
+    value = db.Column(db.String(128))
+
+
 @app.route('/', methods=['GET'])
 def index():
-    import json
-    return json.dumps(dict(os.environ))
+    x = ""
+    for instance in db.session.query(Config):
+        x += instance.key+" - "+instance.value+"<br/>"
+    return x
 
 @app.route('/webhook')
 def webhook():
