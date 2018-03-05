@@ -18,6 +18,11 @@ class Config(db.Model):
     key = db.Column(db.String(10), primary_key=True)
     value = db.Column(db.String(128))
 
+try:
+    db.session.query(Config)
+except sqlalchemy.exc.ProgrammingError:
+    db.create_all()
+
 
 @app.route('/', methods=['GET'])
 def index():
