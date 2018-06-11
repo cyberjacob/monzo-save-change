@@ -14,6 +14,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from collections import OrderedDict
+
+import django_heroku
 from django.apps import apps
 from django.conf import settings
 from django.core import management
@@ -128,9 +130,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Add any apps in the apps folder
 APPS_DIR = "monzohosting/apps/"
 for item in os.listdir(APPS_DIR):
     if os.path.isdir(os.path.join(APPS_DIR, item)):
         app_name = 'apps.%s' % item
         if app_name not in settings.INSTALLED_APPS:
             settings.INSTALLED_APPS += (app_name, )
+
+# automatic configuration of heroku settings
+django_heroku.settings(locals())
