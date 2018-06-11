@@ -7,7 +7,7 @@ class IndexView(View):
     def get(self, request):
         module_name = models.Settings.get_module()
         try:
-            models.Settings.getValue("test")
+            models.Settings.get_value("test")
         except models.Settings.DoesNotExist:
             pass
         return HttpResponse(module_name)
