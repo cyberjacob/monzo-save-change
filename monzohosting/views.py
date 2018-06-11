@@ -6,7 +6,7 @@ from monzohosting import models
 # Create your views here.
 class IndexView(DetailView):
 
-    def get_context_data(self, **kwargs):
+    def get_queryset(self):
         try:
             monzo = models.Settings.get_monzo()
         except models.Settings.DoesNotExist:
