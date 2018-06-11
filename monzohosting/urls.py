@@ -24,7 +24,7 @@ import debug_toolbar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'^__debug__/', include(debug_toolbar.urls)),
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
 
 for item in os.listdir(settings.APPS_DIR):
