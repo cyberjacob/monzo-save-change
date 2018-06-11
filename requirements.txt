@@ -2,5 +2,5 @@
 gunicorn
 requests
 psycopg2-binary
-django
+django>=2.0
 django-heroku
