@@ -1,8 +1,14 @@
-from django.http import HttpResponse
-from django.views import View
+from django.views.generic import DetailView
+
 from monzohosting import models
 
+
 # Create your views here.
-class IndexView(View):
-    def get(self, request):
-        return HttpResponse(models.Settings.get_monzo().whoami())
+class IndexView(DetailView):
+
+    def get_context_data(self, **kwargs):
+        try:
+            monzo = models.Settings.get_monzo()
+        except models.Settings.DoesNotExist:
+            return {'error': True, 'message': "No Monzo configuration available."}
+        return {'error': False, 'message': monzo.whoami()}
