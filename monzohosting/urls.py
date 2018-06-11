@@ -22,7 +22,10 @@ from django.urls import path, include
 from django.conf import settings
 import debug_toolbar
 
+from monzohosting import views
+
 urlpatterns = [
+    path('/', views.IndexView.as_view()),
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
 ]
