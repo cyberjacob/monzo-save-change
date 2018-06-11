@@ -135,7 +135,7 @@ STATIC_URL = '/static/'
 # Add any apps in the apps folder
 APPS_DIR = "apps/"
 for item in os.listdir(APPS_DIR):
-    if os.path.isdir(os.path.join(APPS_DIR, item)):
+    if item[0] != "_" and os.path.isdir(os.path.join(APPS_DIR, item)):
         app_name = 'apps.%s' % item
         if app_name not in settings.INSTALLED_APPS:
             settings.INSTALLED_APPS += (app_name, )
