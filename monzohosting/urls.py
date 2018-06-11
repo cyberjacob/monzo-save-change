@@ -28,4 +28,4 @@ urlpatterns = [
 for item in os.listdir(settings.APPS_DIR):
     if os.path.isdir(os.path.join(settings.APPS_DIR, item)):
         app_name = 'apps.%s' % item
-        urlpatterns += path(r'^'+item+r'/', include(app_name+'.urls'))
+        urlpatterns += [path(r'^'+item+r'/', include(app_name+'.urls'))]
