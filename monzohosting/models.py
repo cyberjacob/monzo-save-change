@@ -15,7 +15,7 @@ class Settings(models.Model):
     settingValue = models.CharField(max_length=128, blank=True, null=True)
 
     @staticmethod
-    def debug_print_module(up=1):
+    def get_module(up=1):
         frm = inspect.stack()[up]
         mod = inspect.getmodule(frm[0])
         parts = mod.__name__.split(".")
@@ -26,6 +26,6 @@ class Settings(models.Model):
     @staticmethod
     def getValue(key, module=None):
         if module is None:
-            module = Settings.debug_print_module()
+            module = Settings.get_module()
             print("found module "+module)
         return Settings.objects.get(moduleName=module, settingName=key).settingValue

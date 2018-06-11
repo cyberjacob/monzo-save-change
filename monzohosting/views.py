@@ -5,6 +5,6 @@ from monzohosting import models
 # Create your views here.
 class IndexView(View):
     def get(self, request):
-        module_name = models.Settings.debug_print_module()
+        module_name = models.Settings.get_module()
         models.Settings.getValue("test")
         return HttpResponse(module_name)

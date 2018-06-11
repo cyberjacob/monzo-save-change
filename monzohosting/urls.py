@@ -31,11 +31,6 @@ urlpatterns = [
 ]
 
 for item in os.listdir(settings.APPS_DIR):
-    print("Trying URLs for "+item)
     app_name = 'apps.%s' % item
     if item[0] != "_" and os.path.isdir(os.path.join(settings.APPS_DIR, item)) and app_name in settings.INSTALLED_APPS:
-        print("Success. Adding " + item)
         urlpatterns += [path(item+'/', include(app_name+'.urls'))]
-    else:
-        print("fail. Not adding " + item)
-        print(item[0] != "_", os.path.isdir(os.path.join(settings.APPS_DIR, item)), app_name in settings.INSTALLED_APPS)
