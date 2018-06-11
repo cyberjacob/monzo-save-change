@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.views import View
-from monzohosting.monzohosting import models
+from monzohosting import models
 
 # Create your views here.
 class IndexView(View):
