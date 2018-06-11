@@ -6,5 +6,8 @@ from monzohosting import models
 class IndexView(View):
     def get(self, request):
         module_name = models.Settings.get_module()
-        models.Settings.getValue("test")
+        try:
+            models.Settings.getValue("test")
+        except models.Settings.DoesNotExist:
+            pass
         return HttpResponse(module_name)
