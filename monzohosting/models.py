@@ -18,4 +18,7 @@ class Settings(models.Model):
     def debug_print_module():
         frm = inspect.stack()[1]
         mod = inspect.getmodule(frm[0])
-        return mod.__name__#.split(".")#[1]
+        parts = mod.__name__.split(".")
+        if parts[0] == "apps":
+            del parts[0]
+        return parts[0]
