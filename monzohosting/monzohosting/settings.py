@@ -128,7 +128,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-APPS_DIR = "apps/"
+APPS_DIR = "monzohosting/apps/"
 for item in os.listdir(APPS_DIR):
     if os.path.isdir(os.path.join(APPS_DIR, item)):
         app_name = 'apps.%s' % item
