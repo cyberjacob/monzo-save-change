@@ -15,10 +15,17 @@ class Settings(models.Model):
     settingValue = models.CharField(max_length=128, blank=True, null=True)
 
     @staticmethod
-    def debug_print_module():
-        frm = inspect.stack()[1]
+    def debug_print_module(up=1):
+        frm = inspect.stack()[up]
         mod = inspect.getmodule(frm[0])
         parts = mod.__name__.split(".")
         if parts[0] == "apps":
             del parts[0]
         return parts[0]
+
+    @staticmethod
+    def getValue(key, module=None):
+        if module is None:
+            module = Settings.debug_print_module()
+            print("found module "+module)
+        return Settings.objects.get(moduleName=module, settingName=key).settingValue
