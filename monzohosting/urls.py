@@ -20,12 +20,19 @@ import os
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+import debug_toolbar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(r'^__debug__/', include(debug_toolbar.urls)),
 ]
 
 for item in os.listdir(settings.APPS_DIR):
+    print("Trying URLs for "+item)
     if os.path.isdir(os.path.join(settings.APPS_DIR, item)) and item in settings.INSTALLED_APPS:
+        print("Success. Adding " + item)
         app_name = 'apps.%s' % item
         urlpatterns += [path(r'^'+item+r'/', include(app_name+'.urls'))]
+    else:
+        print("fail. Not adding " + item)
+        print(os.path.isdir(os.path.join(settings.APPS_DIR, item)), item in settings.INSTALLED_APPS)
