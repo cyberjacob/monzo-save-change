@@ -26,6 +26,6 @@ urlpatterns = [
 ]
 
 for item in os.listdir(settings.APPS_DIR):
-    if os.path.isdir(os.path.join(settings.APPS_DIR, item)):
+    if os.path.isdir(os.path.join(settings.APPS_DIR, item)) and item in settings.INSTALLED_APPS:
         app_name = 'apps.%s' % item
         urlpatterns += [path(r'^'+item+r'/', include(app_name+'.urls'))]
