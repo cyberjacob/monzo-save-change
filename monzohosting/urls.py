@@ -29,10 +29,10 @@ urlpatterns = [
 
 for item in os.listdir(settings.APPS_DIR):
     print("Trying URLs for "+item)
-    if os.path.isdir(os.path.join(settings.APPS_DIR, item)) and item in settings.INSTALLED_APPS:
+    app_name = 'apps.%s' % item
+    if os.path.isdir(os.path.join(settings.APPS_DIR, item)) and app_name in settings.INSTALLED_APPS:
         print("Success. Adding " + item)
-        app_name = 'apps.%s' % item
         urlpatterns += [path(r'^'+item+r'/', include(app_name+'.urls'))]
     else:
         print("fail. Not adding " + item)
-        print(os.path.isdir(os.path.join(settings.APPS_DIR, item)), item in settings.INSTALLED_APPS)
+        print(os.path.isdir(os.path.join(settings.APPS_DIR, item)), app_name in settings.INSTALLED_APPS)
