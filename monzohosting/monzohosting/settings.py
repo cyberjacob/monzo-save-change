@@ -134,6 +134,3 @@ for item in os.listdir(APPS_DIR):
         app_name = 'apps.%s' % item
         if app_name not in settings.INSTALLED_APPS:
             settings.INSTALLED_APPS += (app_name, )
-
-management.call_command('makemigrations', interactive=False)
-management.call_command('migrate', interactive=False)
