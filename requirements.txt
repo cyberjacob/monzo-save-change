@@ -1,6 +1,4 @@
 -e git+https://github.com/cyberjacob/pymonzo.git#egg=pymonzo
-flask
 gunicorn
 requests
-flask-sqlalchemy
 psycopg2-binary
