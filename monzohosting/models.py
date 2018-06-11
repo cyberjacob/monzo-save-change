@@ -26,6 +26,6 @@ class Settings(models.Model):
     @staticmethod
     def getValue(key, module=None):
         if module is None:
-            module = Settings.get_module()
+            module = Settings.get_module(2)
             print("found module "+module)
         return Settings.objects.get(moduleName=module, settingName=key).settingValue
