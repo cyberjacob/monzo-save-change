@@ -26,7 +26,7 @@ class SetupView(FormView):
         models.Settings.set_value("client_id", form.cleaned_data["client_id"])
         models.Settings.set_value("client_secret", form.cleaned_data["client_secret"])
         models.Settings.set_value("instance_domain", form.cleaned_data["instance_domain"])
-        SetupView.success_url = "https://auth.getmondo.co.uk/?response_type=code&redirect_uri=https://" + \
+        SetupView.success_url = "https://auth.monzo.com/?response_type=code&redirect_uri=https://" + \
                                 form.cleaned_data["instance_domain"] + "/auth&client_id=" + \
                                 form.cleaned_data["client_id"]
         return super().form_valid(form)
@@ -37,6 +37,7 @@ class AuthView(RedirectView):
         pymonzo.MonzoAPI(
             client_id=models.Settings.get_value("client_id"),
             client_secret=models.Settings.get_value("client_secret"),
+            auth_code=request.GET["code"],
             redirect_url="https://" + models.Settings.get_value("instance_domain") + "/auth",
             token_save_function=models.Settings.save_token_data
         )
