@@ -140,5 +140,15 @@ for item in os.listdir(APPS_DIR):
         if app_name not in settings.INSTALLED_APPS:
             settings.INSTALLED_APPS += (app_name, )
 
+
+def show_toolbar(request):
+    """Always enable the debut toolbar"""
+    return True
+
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': 'project.settings.show_toolbar',
+}
+
 # automatic configuration of heroku settings
 django_heroku.settings(locals())
