@@ -27,6 +27,7 @@ from monzohosting import views
 urlpatterns = [
     path('', views.IndexView.as_view(), name="index"),
     path('setup', views.SetupView.as_view(), name="monzo-setup"),
+    path('webhooks', views.WebhookView.as_view(), name="webhook-setup"),
     path('auth', views.AuthView.as_view()),
 
     path('admin/', admin.site.urls),

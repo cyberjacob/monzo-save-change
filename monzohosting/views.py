@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # coding=utf-8
+import os
+
 import pymonzo
+from django.conf import settings
 from django.views.generic import FormView, TemplateView, RedirectView
 
 from monzohosting import models, forms
@@ -16,6 +19,20 @@ class IndexView(TemplateView):
         except models.Settings.DoesNotExist:
             return {'error': True, 'message': "No Monzo configuration available."}
         return {'error': False, 'message': monzo.whoami()}
+
+
+class WebhookView(TemplateView):
+    template_name = "webhook_setup.html"
+
+    def get_context_data(self, **kwargs):
+        c = {'webhooks': {}}
+        for item in os.listdir(settings.APPS_DIR):
+            if item[0] != "_" and os.path.isdir(os.path.join(settings.APPS_DIR, item)):
+                try:
+                    c["webkooks"][item] = models.webhookReceivers.objects.get(moduleName=item, webhookType="transaction.created")
+                except models.webhookReceivers.DoesNotExist:
+                    c["webkooks"][item] = False
+        return c
 
 
 class SetupView(FormView):
@@ -43,3 +60,7 @@ class AuthView(RedirectView):
         ).whoami()
 
         return super().get(request, *args, **kwargs)
+
+
+def webhook(request):
+    return "OK"

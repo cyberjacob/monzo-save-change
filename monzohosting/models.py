@@ -12,7 +12,6 @@ from django.db import models
 
 class Settings(models.Model):
     """Global settings"""
-    # TODO: Make settings available to modules
     moduleName = models.CharField(max_length=32, blank=False, null=False)
     settingName = models.CharField(max_length=32, blank=False, null=False)
     settingValue = models.CharField(max_length=1024, blank=True, null=True)
@@ -62,3 +61,9 @@ class Settings(models.Model):
         token = monzo._token.copy()
         token.update(client_secret=monzo._client_secret)
         Settings.set_value("token_data", json.dumps(token), "monzohosting")
+
+
+class webhookReceivers(models.Model):
+    moduleName = models.CharField(max_length=32, blank=False, null=False)
+    webhookType = models.CharField(max_length=32, blank=False, null=False)
+    canReceive = models.BooleanField(default=False, blank=False, null=False)

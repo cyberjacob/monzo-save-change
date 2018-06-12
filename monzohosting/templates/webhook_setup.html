@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Setup Monzo Connection</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Module Name</th>
+        <th>Webhook type</th>
+        <th>Recieving Webhooks</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for module, receiving in webhooks.items %}
+            <tr>
+            <td>{{ module }}</td>
+            <td></td>
+            <td>{{ receiving }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

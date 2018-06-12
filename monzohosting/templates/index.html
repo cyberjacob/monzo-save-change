@@ -5,13 +5,15 @@
     <title>Monzo Connectivity Test</title>
 </head>
 <body>
-
-Connection Error: {{ error }}<br/>
-Details: {{ message }}
+<p>
+    Connection Error: {{ error }}<br/>
+    Details: {{ message }}
+</p>
 
 {% if error %}
-<a href="{% url 'monzo-setup' %}">Set up connection</a>
+    <a href="{% url 'monzo-setup' %}">Set up connection</a><br/>
 {% endif %}
 
+<a href="{% url 'webhook-setup' %}">Set up webhooks</a>
 </body>
 </html>
