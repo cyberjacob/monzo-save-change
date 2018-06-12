@@ -1,12 +1,13 @@
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
 
 from monzohosting import models
 
 
 # Create your views here.
-class IndexView(DetailView):
+class IndexView(TemplateView):
+    template_name = "index.html"
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
         try:
             monzo = models.Settings.get_monzo()
         except models.Settings.DoesNotExist:
