@@ -45,13 +45,17 @@ class Settings(models.Model):
     @staticmethod
     def get_monzo():
         token_data = Settings.get_value("token_data")
-        redirect_url = Settings.get_value("redirect_url")
+        redirect_url = Settings.get_redirect_uri()
         token_data = json.loads(token_data)
         return pymonzo.MonzoAPI(
             token_data=token_data,
             token_save_function=Settings.save_token_data,
             redirect_url=redirect_url
         )
+
+    @staticmethod
+    def get_redirect_uri():
+        return "https://" + Settings.get_value("instance_domain") + "/auth"
 
     @staticmethod
     def save_token_data(monzo):

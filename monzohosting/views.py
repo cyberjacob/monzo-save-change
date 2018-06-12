@@ -26,9 +26,8 @@ class SetupView(FormView):
         models.Settings.set_value("client_id", form.cleaned_data["client_id"])
         models.Settings.set_value("client_secret", form.cleaned_data["client_secret"])
         models.Settings.set_value("instance_domain", form.cleaned_data["instance_domain"])
-        SetupView.success_url = "https://auth.monzo.com/?response_type=code&redirect_uri=https://" + \
-                                form.cleaned_data["instance_domain"] + "/auth&client_id=" + \
-                                form.cleaned_data["client_id"]
+        SetupView.success_url = "https://auth.monzo.com/?response_type=code&redirect_uri="+\
+                                models.Settings.get_redirect_uri()+"&client_id=" + form.cleaned_data["client_id"]
         return super().form_valid(form)
 
 
