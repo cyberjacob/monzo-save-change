@@ -26,6 +26,9 @@ from monzohosting import views
 
 urlpatterns = [
     path('', views.IndexView.as_view()),
+    path('/setup', views.SetupView.as_view(), name="monzo-setup"),
+    path('/auth', views.AuthView.as_view()),
+
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
 ]
