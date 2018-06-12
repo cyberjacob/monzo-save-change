@@ -23,11 +23,12 @@ class SetupView(FormView):
     form_class = forms.SetupForm
 
     def form_valid(self, form):
-        models.Settings.set_value("client_id", form.client_id)
-        models.Settings.set_value("client_secret", form.client_secret)
-        models.Settings.set_value("instance_domain", form.instance_domain)
+        models.Settings.set_value("client_id", form.cleaned_data["client_id"])
+        models.Settings.set_value("client_secret", form.cleaned_data["client_secret"])
+        models.Settings.set_value("instance_domain", form.cleaned_data["instance_domain"])
         SetupView.success_url = "https://auth.getmondo.co.uk/?response_type=code&redirect_uri=https://" + \
-                                form.instance_domain + "/auth&client_id=" + form.client_id
+                                form.cleaned_data["instance_domain"] + "/auth&client_id=" + \
+                                form.cleaned_data["client_id"]
         return super().form_valid(form)
 
 
