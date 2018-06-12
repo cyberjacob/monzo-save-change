@@ -15,7 +15,7 @@ class Settings(models.Model):
     # TODO: Make settings available to modules
     moduleName = models.CharField(max_length=32, blank=False, null=False)
     settingName = models.CharField(max_length=32, blank=False, null=False)
-    settingValue = models.CharField(max_length=128, blank=True, null=True)
+    settingValue = models.CharField(max_length=1024, blank=True, null=True)
 
     @staticmethod
     def get_module(up=1):
