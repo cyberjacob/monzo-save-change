@@ -38,7 +38,7 @@ class Settings(models.Model):
         if module is None:
             module = Settings.get_module(2)
             print("found module " + module)
-        obj = Settings.objects.get(moduleName=module, settingName=key)
+        obj = Settings.objects.get_or_create(moduleName=module, settingName=key)[0]
         obj.settingValue = value
         obj.save()
 
