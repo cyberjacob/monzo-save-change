@@ -7,7 +7,7 @@ from monzohosting import models
 
 # Create your views here.
 class IndexView(TemplateView):
-    template_name = "index.html"
+    template_name = "demoapp_index.html"
 
     def get_context_data(self, **kwargs):
         monzo = models.Settings.get_monzo()
