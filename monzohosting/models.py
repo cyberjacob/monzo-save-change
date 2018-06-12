@@ -57,4 +57,4 @@ class Settings(models.Model):
     def save_token_data(monzo):
         token = monzo._token.copy()
         token.update(client_secret=monzo._client_secret)
-        Settings.set_value("token_data", json.dumps(token))
+        Settings.set_value("token_data", json.dumps(token), "monzohosting")

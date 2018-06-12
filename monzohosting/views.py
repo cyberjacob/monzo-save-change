@@ -33,6 +33,7 @@ class SetupView(FormView):
 
 
 class AuthView(RedirectView):
+    pattern_name = 'index'
     def get(self, request, *args, **kwargs):
         pymonzo.MonzoAPI(
             client_id=models.Settings.get_value("client_id"),
@@ -40,6 +41,6 @@ class AuthView(RedirectView):
             auth_code=request.GET["code"],
             redirect_url="https://" + models.Settings.get_value("instance_domain") + "/auth",
             token_save_function=models.Settings.save_token_data
-        )
+        ).whoami()
 
         return super().get(request, *args, **kwargs)
