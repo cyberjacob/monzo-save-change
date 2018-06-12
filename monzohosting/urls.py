@@ -25,7 +25,7 @@ import debug_toolbar
 from monzohosting import views
 
 urlpatterns = [
-    path('', views.IndexView.as_view()),
+    path('', views.IndexView.as_view(), name="index"),
     path('setup', views.SetupView.as_view(), name="monzo-setup"),
     path('auth', views.AuthView.as_view()),
 
