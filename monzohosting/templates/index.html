@@ -9,5 +9,9 @@
 Connection Error: {{ error }}<br/>
 Details: {{ message }}
 
+{% if error %}
+<a href="{% url 'monzo-setup' %}">Set up connection</a>
+{% endif %}
+
 </body>
 </html>
