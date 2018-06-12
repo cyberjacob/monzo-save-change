@@ -1,13 +1,17 @@
-from django.http import HttpResponse
-from django.views import View
+#!/usr/bin/env python
+# coding=utf-8
+from django.views.generic import TemplateView
+
 from monzohosting import models
 
+
 # Create your views here.
-class IndexView(View):
-    def get(self, request):
-        module_name = models.Settings.get_module()
-        try:
-            models.Settings.get_value("test")
-        except models.Settings.DoesNotExist:
-            pass
-        return HttpResponse(module_name)
+class IndexView(TemplateView):
+    template_name = "index.html"
+    def get_context_data(self, **kwargs):
+        monzo = models.Settings.get_monzo()
+        accounts = monzo.accounts()
+        c = {}
+        for account in accounts:
+            c[account.id] = monzo.balance(account.id)
+        return c
