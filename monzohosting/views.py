@@ -29,9 +29,12 @@ class WebhookView(TemplateView):
         for item in os.listdir(settings.APPS_DIR):
             if item[0] != "_" and os.path.isdir(os.path.join(settings.APPS_DIR, item)):
                 try:
-                    c["webkooks"][item] = models.webhookReceivers.objects.get(moduleName=item, webhookType="transaction.created")
+                    c["webhooks"][item] = models.webhookReceivers.objects.get(
+                        moduleName=item,
+                        webhookType="transaction.created"
+                    )
                 except models.webhookReceivers.DoesNotExist:
-                    c["webkooks"][item] = False
+                    c["webhooks"][item] = False
         return c
 
 
