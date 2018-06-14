@@ -10,7 +10,7 @@ class IndexView(TemplateView):
     template_name = "demoapp_index.html"
 
     def get_context_data(self, **kwargs):
-        monzo = models.Settings.get_monzo()
+        monzo = models.Setting.get_monzo()
         accounts = monzo.accounts()
         c = {}
         for account in accounts:

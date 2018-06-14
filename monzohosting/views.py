@@ -15,8 +15,8 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         try:
-            monzo = models.Settings.get_monzo()
-        except models.Settings.DoesNotExist:
+            monzo = models.Setting.get_monzo()
+        except models.Setting.DoesNotExist:
             return {'error': True, 'message': "No Monzo configuration available."}
         return {'error': False, 'message': monzo.whoami()}
 
@@ -43,11 +43,11 @@ class SetupView(FormView):
     form_class = forms.SetupForm
 
     def form_valid(self, form):
-        models.Settings.set_value("client_id", form.cleaned_data["client_id"])
-        models.Settings.set_value("client_secret", form.cleaned_data["client_secret"])
-        models.Settings.set_value("instance_domain", form.cleaned_data["instance_domain"])
-        SetupView.success_url = "https://auth.monzo.com/?response_type=code&redirect_uri="+\
-                                models.Settings.get_redirect_uri()+"&client_id=" + form.cleaned_data["client_id"]
+        models.Setting.set_value("client_id", form.cleaned_data["client_id"])
+        models.Setting.set_value("client_secret", form.cleaned_data["client_secret"])
+        models.Setting.set_value("instance_domain", form.cleaned_data["instance_domain"])
+        SetupView.success_url = "https://auth.monzo.com/?response_type=code&redirect_uri=" + \
+                                models.Setting.get_redirect_uri() + "&client_id=" + form.cleaned_data["client_id"]
         return super().form_valid(form)
 
 
@@ -55,11 +55,11 @@ class AuthView(RedirectView):
     pattern_name = 'index'
     def get(self, request, *args, **kwargs):
         pymonzo.MonzoAPI(
-            client_id=models.Settings.get_value("client_id"),
-            client_secret=models.Settings.get_value("client_secret"),
+            client_id=models.Setting.get_value("client_id"),
+            client_secret=models.Setting.get_value("client_secret"),
             auth_code=request.GET["code"],
-            redirect_url="https://" + models.Settings.get_value("instance_domain") + "/auth",
-            token_save_function=models.Settings.save_token_data
+            redirect_url="https://" + models.Setting.get_value("instance_domain") + "/auth",
+            token_save_function=models.Setting.save_token_data
         ).whoami()
 
         return super().get(request, *args, **kwargs)

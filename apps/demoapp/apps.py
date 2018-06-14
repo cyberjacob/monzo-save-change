@@ -13,6 +13,6 @@ class DemoappConfig(AccountManagerAppconfig):
         return super().can_accept_webhook(webhook_type)
 
     def call_transaction_created_webhook(self, webhook):
-        models.Settings.get_monzo().create_feed_item(webhook["data"]["account_id"],
+        models.Setting.get_monzo().create_feed_item(webhook["data"]["account_id"],
                                                      "transaction pushed",
                                                      "http://www.nyan.cat/cats/original.gif")

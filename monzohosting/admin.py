@@ -4,4 +4,4 @@
 from django.contrib import admin
 from monzohosting import models
 
-admin.site.register(models.Settings, admin.ModelAdmin)
+admin.site.register(models.Setting, admin.ModelAdmin)
